@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+
+$(document).ready(function(){
+	$(".buttonArm").css("height", "200");
+	$(".buttonArm").css("width", "50%");
+	$(".buttonArm").css("font-size", "60px");
+    $.get( "/state", function( data ) {
+    	if(data === "armed"){
+  				$( ".buttonArm" ).html("DISARM");
+  				$(".buttonArm").css("color", "green");
+  			}else{
+  				$( ".buttonArm" ).html("ARM");
+  				$(".buttonArm").css("color", "red");
+  			}
+	});
+});
+
+$(document).ready(function(){
+    $(".buttonArm").click(function(){
+        $.get( "/state", function( data ) {
+  			if(data === "armed"){
+  				$( ".buttonArm" ).html("ARM");
+  				$.get("/control?button=disarmed");
+  				$(".buttonArm").css("color", "red");
+  			}else{
+  				$( ".buttonArm" ).html("DISARM");
+  				$.get("/control?button=armed");
+  				$(".buttonArm").css("color", "green");
+  			}
+		});
+    });
+});
+// $(document).ready(function(){
+//     $(".disarmed").click(function(){
+//         $.get("/control?button=disarmed");
+//     });
+// });
+</script>
+</head>
+<body>
+
+<button class = "buttonArm">default</button>
+
+</body>
+</html>
